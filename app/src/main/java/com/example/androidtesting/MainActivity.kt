@@ -10,14 +10,18 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     private val emailValidator = EmailValidator()
+    private val passwordValidator = PasswordValidator()
+    private val confirmPasswordValidator = ConfirmPasswordValidator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.emailInput.addTextChangedListener(emailValidator)
+        binding.password.addTextChangedListener(passwordValidator)
+        binding.confirmPassword.addTextChangedListener(confirmPasswordValidator)
         binding.saveButton.setOnClickListener {
-            if (emailValidator.isValid) {
+            if (emailValidator.isValid && passwordValidator.isPasswordValid && confirmPasswordValidator.isConfirmPasswordValid) {
                 Toast.makeText(
                     this@MainActivity,
                     getString(R.string.valid_email), Toast.LENGTH_SHORT
